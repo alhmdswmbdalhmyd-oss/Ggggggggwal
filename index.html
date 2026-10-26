@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>NEXO OS 1.0</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#030811;
+  color:#f5f8ff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+}
+.phone{
+  width:100%;
+  max-width:390px;
+  min-height:100vh;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at top right,#174779,transparent 45%),
+    linear-gradient(160deg,#0b1c31,#050b16);
+}
+.status{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  padding:8px 4px;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:25px;
+}
+.logo{
+  font-size:25px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.logo span{color:#58a6ff}
+.date{color:#aab8cc;font-size:13px;margin-top:8px}
+.avatar{
+  width:45px;height:45px;
+  border-radius:16px;
+  display:grid;place-items:center;
+  background:#ffffff15;font-size:24px;
+}
+.clock{margin:38px 0 25px}
+#greeting{color:#c5dfff;font-size:15px}
+#clock{font-size:58px;font-weight:300;margin-top:8px}
+.subtitle{color:#aab8cc;font-size:13px}
+.search{
+  width:100%;padding:15px;
+  background:#ffffff0d;
+  border:1px solid #ffffff20;
+  border-radius:15px;
+  color:white;font-size:14px;
+  margin-bottom:28px;
+}
+.section{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+  font-weight:bold;
+}
+.section small{color:#58a6ff;font-weight:normal}
+.apps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px 8px;
+}
+.app{
+  border:0;background:none;color:white;
+  display:flex;flex-direction:column;
+  align-items:center;gap:9px;
+  cursor:pointer;font-size:12px;
+}
+.app-icon{
+  width:57px;height:57px;
+  border-radius:19px;
+  display:grid;place-items:center;
+  font-size:25px;
+  background:linear-gradient(145deg,#203c5d,#101d30);
+  border:1px solid #ffffff20;
+}
+.app:active{transform:scale(.94)}
+.widget{
+  margin-top:32px;padding:17px;
+  border-radius:18px;
+  background:#1c477566;
+  border:1px solid #ffffff20;
+}
+.widget strong{font-size:14px}
+.widget p{font-size:12px;color:#c1d5ef}
+.dock{
+  display:flex;justify-content:space-around;
+  margin-top:35px;padding:15px;
+  border-radius:22px;
+  background:#ffffff12;
+}
+.dock button{
+  background:none;border:0;
+  color:white;font-size:25px;cursor:pointer;
+}
+.toast{
+  display:none;
+  position:absolute;
+  top:40%;
+  left:20px;right:20px;
+  padding:20px;
+  border:1px solid #ffffff30;
+  border-radius:20px;
+  background:#14263df5;
+  box-shadow:0 10px 50px #0009;
+  z-index:5;
+}
+.toast.show{display:block}
+.toast h3{margin-top:0}
+.toast p{white-space:pre-line;line-height:1.8;color:#d5e4f8}
+.toast button{
+  padding:10px 18px;border:0;
+  border-radius:10px;background:#58a6ff;
+  color:#07111f;cursor:pointer;
+}
+.footer{text-align:center;color:#8ca5c3;font-size:10px;margin-top:25px}
+</style>
+</head>
+
+<body>
+<main class="phone">
+
+  <div class="status">
+    <span id="statusTime">09:41</span>
+    <span>▮▮　◉　▰</span>
+  </div>
+
+  <header class="header">
+    <div>
+      <div class="logo">NEXO <span>OS</span></div>
+      <div class="date" id="date">نظامك، عالمك</div>
+    </div>
+    <div class="avatar">✦</div>
+  </header>
+
+  <section class="clock">
+    <div id="greeting">أهلًا بك في نظامك</div>
+    <div id="clock">09:41</div>
+    <div class="subtitle">كل شيء يبدأ من هنا</div>
+  </section>
+
+  <button class="search" onclick="openApp('البحث',
+  'ميزة البحث قيد التطوير.')">
+    ⌕　ابحث في NEXO OS
+  </button>
+
+  <div class="section">
+    <span>تطبيقاتك</span>
+    <small>الإصدار 1.0</small>
+  </div>
+
+  <section class="apps">
+
+    <button class="app" onclick="openApp('الهاتف',
+    'واجهة تجريبية. المكالمات الحقيقية غير متاحة.')">
+      <span class="app-icon">☎</span>
+      <span>الهاتف</span>
+    </button>
+
+    <button class="app" onclick="openApp('الرسائل',
+    'تطبيق الرسائل قيد التطوير.')">
+      <span class="app-icon">▤</span>
+      <span>الرسائل</span>
+    </button>
+
+    <button class="app" onclick="openApp('الكاميرا',
+    'الكاميرا غير مفعلة في هذا النموذج.')">
+      <span class="app-icon">◎</span>
+      <span>الكاميرا</span>
+    </button>
+
+    <button class="app" onclick="openApp('الصور',
+    'معرض الصور قيد التطوير.')">
+      <span class="app-icon">▧</span>
+      <span>الصور</span>
+    </button>
+
+    <button class="app" onclick="openSettings()">
+      <span class="app-icon">⚙</span>
+      <span>الإعدادات</span>
+    </button>
+
+    <button class="app" onclick="openApp('المتصفح',
+    'متصفح NEXO قيد التطوير.')">
+      <span class="app-icon">◉</span>
+      <span>المتصفح</span>
+    </button>
+
+    <button class="app" onclick="openApp('المتجر',
+    'متجر تطبيقات NEXO سيضاف لاحقًا.')">
+      <span class="app-icon">▣</span>
+      <span>المتجر</span>
+    </button>
+
+    <button class="app" onclick="openApp('الملفات',
+    'مدير الملفات قيد التطوير.')">
+      <span class="app-icon">▰</span>
+      <span>الملفات</span>
+    </button>
+
+  </section>
+
+  <section class="widget">
+    <strong>مرحبًا بك في NEXO</strong>
+    <p>خطوة أولى نحو نظامك الخاص.</p>
+  </section>
+
+  <nav class="dock">
+    <button onclick="openApp('الهاتف','واجهة تجريبية')">☎</button>
+    <button onclick="openApp('المتصفح','قيد التطوير')">◉</button>
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
+    <button onclick="openSettings()">⚙</button>
+  </nav>
+
+  <div class="footer">NEXO OS • CONCEPT BUILD 1.0</div>
+
+  <aside class="toast" id="toast">
+    <h3 id="toastTitle">NEXO OS</h3>
+    <p id="toastText"></p>
+    <button onclick="closeApp()">إغلاق</button>
+  </aside>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function updateClock(){
+  const now = new Date();
+
+  $('clock').textContent =
+    now.toLocaleTimeString('ar-SA',{
+      hour:'2-digit',
+      minute:'2-digit',
+      hour12:false
+    });
+
+  $('statusTime').textContent =
+    now.toLocaleTimeString('en-GB',{
+      hour:'2-digit',
+      minute:'2-digit'
+    });
+
+  $('date').textContent =
+    now.toLocaleDateString('ar-SA',{
+      weekday:'long',
+      day:'numeric',
+      month:'long'
+    });
+
+  const h = now.getHours();
+
+  $('greeting').textContent =
+    h < 12 ? 'صباح الخير، أهلًا بك' :
+    h < 18 ? 'نهارك جميل، أهلًا بك' :
+    'مساء الخير، أهلًا بك';
+}
+
+function openApp(title, description){
+  $('toastTitle').textContent = title;
+  $('toastText').textContent = description;
+  $('toast').classList.add('show');
+}
+
+function closeApp(){
+  $('toast').classList.remove('show');
+}
+
+function openSettings(){
+  openApp(
+    'إعدادات NEXO OS',
+    'الإصدار: 1.0\\n' +
+    'المشروع: NEXO OS\\n' +
+    'النوع: واجهة تجريبية\\n' +
+    'النواة: لم يتم بناؤها بعد'
+  );
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+document.addEventListener('keydown', event => {
+  if(event.key === 'Escape') closeApp();
+});
+</script>
+
+</body>
+</html>
